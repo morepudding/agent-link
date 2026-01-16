@@ -234,6 +234,56 @@ main {
 }
 
 /* --- FORMS & FEED --- */
+/* --- SISTER HUNT / DOSSIER --- */
+.sister-hunt-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.hunt-item {
+    background: rgba(255, 0, 60, 0.05);
+    border: 1px solid rgba(255, 0, 60, 0.2);
+    padding: 15px;
+    position: relative;
+    font-size: 0.9rem;
+}
+
+.glitch-border {
+    border: 1px solid var(--cyber-blue);
+    box-shadow: 2px 0 var(--cyber-red), -2px 0 var(--cyber-blue);
+    animation: micro-glitch 5s infinite;
+}
+
+.search-progress {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px dashed var(--cyber-blue);
+}
+
+@keyframes micro-glitch {
+    0% {
+        transform: translate(0);
+    }
+
+    1% {
+        transform: translate(-2px, 1px);
+    }
+
+    2% {
+        transform: translate(2px, -1px);
+    }
+
+    3% {
+        transform: translate(0);
+    }
+
+    100% {
+        transform: translate(0);
+    }
+}
+
 .section-title {
     font-family: 'Orbitron', sans-serif;
     color: var(--cyber-yellow);

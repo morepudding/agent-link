@@ -60,12 +60,34 @@
                     <div class="card-label">NETWORK</div>
                     <small>FIXER_CONTACTS</small>
                 </button>
-                <button class="dash-card glitch-hover" onclick="switchView('dataterm')">
-                    <div class="card-icon">🧠</div>
-                    <div class="card-label">DATATERM</div>
-                    <small>KNOWLEDGE_BASE</small>
+                <button class="dash-card alert-card glitch-hover" onclick="switchView('sister')">
+                    <div class="card-icon">👁️</div>
+                    <div class="card-label">SISTER_HUNT</div>
+                    <small>SEARCH_ARCHIVES</small>
                 </button>
             </div>
+        </section>
+
+        <section id="view-sister" class="view">
+            <h2 class="section-title glitch-text" data-text="DOSSIER: SISTER_UNKNOWN">DOSSIER: SISTER_UNKNOWN</h2>
+            <div class="sister-hunt-container">
+                <div class="hunt-item">
+                    <div class="item-meta">TARGET_LAST_SEEN: 1_YEAR_AGO</div>
+                    <p>La tragédie familiale s'est déroulée il y a 12 mois. Aucun contact visuel confirmé depuis.</p>
+                </div>
+                <div class="hunt-item glitch-border">
+                    <div class="item-meta">BIOTECHNICA_LEAK: #4421-X</div>
+                    <p>Des rumeurs indiquent qu'elle a été aperçue près d'un centre de recherche biotechnologique dans
+                        les Badlands.</p>
+                </div>
+                <div class="search-progress">
+                    <div class="bar-label">ARCHIVE_DECRYPTION_PROGRESS: 12%</div>
+                    <div class="bar-outer">
+                        <div class="bar-inner sp" style="width: 12%;"></div>
+                    </div>
+                </div>
+            </div>
+            <button class="back-btn" onclick="switchView('dashboard')">BACK_TO_HOME</button>
         </section>
 
         <section id="view-network" class="view">
