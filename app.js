@@ -7,7 +7,28 @@ let state = {
         { id: 1, type: 'biotechnica', title: 'BIOTECHNICA_PR: "Sustainability is our core focus"', date: '2026-01-16' },
         { id: 2, type: 'general', title: 'NCPD: South Zone dogfights under investigation', date: '2026-01-16' },
         { id: 3, type: 'biotechnica', title: 'LEAK: Classified research center move to Night City?', date: '2026-01-15' }
-    ]
+    ],
+    wiki: [
+        { id: 1, cat: 'slang', title: 'CHOOM / CHOOMBA', content: 'Terme amical (ou parfois sarcastique) pour un ami ou un membre de la famille. Vient du Neo-Afro-American.' },
+        { id: 2, cat: 'slang', title: 'EDDIES', content: 'Prononciation phonétique de "EDs" (Eurodollars). La monnaie standard de Night City.' },
+        { id: 3, cat: 'slang', title: 'PREEM', content: 'Argot pour "Premium". Signifie que quelque chose est de haute qualité ou génial.' },
+        { id: 4, cat: 'slang', title: 'GONK', content: 'Idiot, imbécile. Quelqu\'un qui fait des choix stupides ou dangereux.' },
+        { id: 5, cat: 'slang', title: 'FLATLINE', content: 'Mort. Faire un plat au moniteur cardiaque. Utilisé aussi pour désigner un hack réussi sur une ICE.' },
+        { id: 6, cat: 'rules', title: 'ACTIONS DE COMBAT', content: 'À ton tour, tu as 1 <strong>Action de Mouvement</strong> et 1 <strong>Action</strong> (Attaque, Recharger, Soins, etc.).' },
+        { id: 7, cat: 'rules', title: 'ARMURE (SP)', content: 'Les dégâts sont soustraits de ton SP (Stopping Power). Si tu prends des dégâts, ton SP diminue de 1 (Ablation).' },
+        { id: 8, cat: 'rules', title: 'OPERATOR (FIXER)', content: 'Ta capacité de rôle. Permet de trouver du matos rare, de négocier les prix (Haggle) et d\'avoir des contacts partout.' },
+        { id: 9, cat: 'lore', title: 'THE GLEN (HEYWOOD)', content: 'Ton quartier. Riche et propre au Nord (City Hall), il devient dangereux et pauvre au Sud, vers Vista del Rey.' },
+        { id: 10, cat: 'biotechnica', title: 'CHOOH2', content: 'Le carburant mondial créé par Biotechnica à partir de levure génétiquement modifiée. Ils détiennent tous les brevets.' },
+        { id: 11, cat: 'biotechnica', title: 'PROJECT NIGHTINGALE', content: 'Rumeurs d\'expériences de clonage humain illégales. Un sujet sensible pour Link.' }
+    ],
+    wikiFilter: 'all',
+    wikiSearch: '',
+    hp: 40,
+    maxHp: 40,
+    armor: 11,
+    maxArmor: 11,
+    luck: 6,
+    maxLuck: 6
 };
 
 // --- INITIALIZATION ---
@@ -15,6 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
     updateBalanceDisplay();
     renderNews();
     renderNotes();
+    renderWiki();
+    updateStatDisplays();
     startVitalSim();
 });
 
@@ -27,28 +50,71 @@ function switchView(viewId) {
     // Nav active state
     document.querySelectorAll('.app-nav button').forEach(btn => {
         btn.classList.remove('active');
-        if (btn.innerText.toLowerCase().includes(viewId.substring(0, 3))) {
+        const label = btn.innerText.toLowerCase();
+        if ((viewId === 'dataterm' && label === 'wiki') ||
+            (viewId === 'dashboard' && label === 'home') ||
+            (viewId === 'stats' && label === 'stats') ||
+            (viewId === 'carnet' && label === 'car')) {
             btn.classList.add('active');
         }
     });
-
-    // Special case for dashboard
-    if (viewId === 'dashboard') {
-        document.querySelector('.app-nav button:nth-child(2)').classList.add('active');
-    }
 }
 
 // --- VITALS SIMULATION ---
 function startVitalSim() {
     setInterval(() => {
         state.heartRate = 70 + Math.floor(Math.random() * 15);
-        document.getElementById('heart-rate').innerText = state.heartRate;
+        const hrEl = document.getElementById('heart-rate');
+        if (hrEl) hrEl.innerText = state.heartRate;
     }, 3000);
+}
+
+// --- WIKI / DATATERM ---
+function renderWiki() {
+    const container = document.getElementById('wiki-content');
+    if (!container) return;
+
+    const filtered = state.wiki.filter(item => {
+        const matchesCat = state.wikiFilter === 'all' || item.cat === state.wikiFilter;
+        const matchesSearch = item.title.toLowerCase().includes(state.wikiSearch.toLowerCase()) ||
+            item.content.toLowerCase().includes(state.wikiSearch.toLowerCase());
+        return matchesCat && matchesSearch;
+    });
+
+    container.innerHTML = filtered.map(item => `
+        <div class="wiki-item">
+            <div class="category-tag">${item.cat.toUpperCase()}</div>
+            <h3>${item.title}</h3>
+            <p>${item.content}</p>
+        </div>
+    `).join('');
+}
+
+function filterWiki(cat) {
+    state.wikiFilter = state.wikiFilter === cat ? 'all' : cat;
+
+    // Update button styles
+    document.querySelectorAll('.wiki-categories button').forEach(btn => {
+        btn.style.background = btn.innerText.toLowerCase() === state.wikiFilter
+            ? 'var(--cyber-blue)'
+            : 'rgba(0, 240, 255, 0.1)';
+        btn.style.color = btn.innerText.toLowerCase() === state.wikiFilter
+            ? 'var(--bg-dark)'
+            : 'var(--cyber-blue)';
+    });
+
+    renderWiki();
+}
+
+function searchWiki() {
+    state.wikiSearch = document.getElementById('wiki-search-input').value;
+    renderWiki();
 }
 
 // --- NEWS FEED ---
 function renderNews() {
     const feed = document.getElementById('news-feed');
+    if (!feed) return;
     feed.innerHTML = state.news.map(item => `
         <div class="feed-item ${item.type}">
             <div class="item-meta">[${item.date}]</div>
@@ -59,7 +125,8 @@ function renderNews() {
 
 // --- WALLET & BETTING ---
 function updateBalanceDisplay() {
-    document.getElementById('ed-balance').innerText = state.edBalance.toLocaleString('en-US', { minimumFractionDigits: 2 });
+    const balEl = document.getElementById('ed-balance');
+    if (balEl) balEl.innerText = state.edBalance.toLocaleString('en-US', { minimumFractionDigits: 2 });
 }
 
 function placeBet() {
@@ -115,6 +182,7 @@ function addNote() {
 
 function renderNotes() {
     const list = document.getElementById('notes-list');
+    if (!list) return;
     list.innerHTML = state.notes.map(note => `
         <div class="note-card">
             <div class="item-meta">${note.date}</div>
@@ -129,3 +197,50 @@ function deleteNote(id) {
     localStorage.setItem('link_notes', JSON.stringify(state.notes));
     renderNotes();
 }
+
+// --- STATS & BIO-MONITOR ---
+function updateStatDisplays() {
+    // HP
+    const hpVal = document.getElementById('hp-val');
+    const hpBar = document.getElementById('hp-bar');
+    if (hpVal) hpVal.innerText = state.hp;
+    if (hpBar) {
+        const percent = (state.hp / state.maxHp) * 100;
+        hpBar.style.width = `${percent}%`;
+        hpBar.style.background = percent <= 50 ? 'var(--cyber-red)' : '#00ff41';
+    }
+
+    // Armor
+    const spVal = document.getElementById('sp-val');
+    const spBar = document.getElementById('sp-bar');
+    if (spVal) spVal.innerText = state.armor;
+    if (spBar) {
+        const percent = (state.armor / state.maxArmor) * 100;
+        spBar.style.width = `${percent}%`;
+    }
+
+    // Luck
+    const luckVal = document.getElementById('luck-val');
+    if (luckVal) luckVal.innerText = state.luck;
+}
+
+function takeDamage(amt) {
+    state.hp = Math.max(0, state.hp - amt);
+    updateStatDisplays();
+    if (state.hp <= 20 && state.hp > 0) {
+        alert("CRITICAL_WOUND_DETECTED: Healing required.");
+    }
+}
+
+function ablateArmor() {
+    state.armor = Math.max(0, state.armor - 1);
+    updateStatDisplays();
+}
+
+function resetVitals() {
+    state.hp = state.maxHp;
+    state.armor = state.maxArmor;
+    state.luck = state.maxLuck;
+    updateStatDisplays();
+}
+

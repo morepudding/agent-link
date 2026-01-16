@@ -50,20 +50,84 @@
                     <div class="card-icon">📡</div>
                     <div class="card-label">DATA_POOL</div>
                 </button>
-                <button class="dash-card glitch-hover" onclick="switchView('wallet')">
-                    <div class="card-icon">💶</div>
-                    <div class="card-label">WALLET</div>
+                <button class="dash-card glitch-hover" onclick="switchView('stats')">
+                    <div class="card-icon">👤</div>
+                    <div class="card-label">STATS</div>
+                    <small>BIO_MONITOR</small>
                 </button>
                 <button class="dash-card glitch-hover" onclick="switchView('carnet')">
                     <div class="card-icon">📒</div>
                     <div class="card-label">CARNET</div>
                 </button>
-                <div class="dash-card static alert-card">
-                    <div class="card-icon">⚠️</div>
-                    <div class="card-label">OBSESSION</div>
-                    <small>SISTER_UNKNOWN</small>
+                <button class="dash-card glitch-hover" onclick="switchView('dataterm')">
+                    <div class="card-icon">🧠</div>
+                    <div class="card-label">DATATERM</div>
+                    <small>KNOWLEDGE_BASE</small>
+                </button>
+            </div>
+        </section>
+
+        <section id="view-stats" class="view">
+            <h2 class="section-title">LINK_STATUS</h2>
+
+            <div class="stats-container">
+                <div class="vital-bar-container">
+                    <div class="bar-label">HEALTH_POINTS (<span id="hp-val">40</span>/40)</div>
+                    <div class="bar-outer">
+                        <div id="hp-bar" class="bar-inner hp" style="width: 100%;"></div>
+                    </div>
+                </div>
+
+                <div class="vital-bar-container">
+                    <div class="bar-label">ARMOR_JACK (<span id="sp-val">11</span>/11)</div>
+                    <div class="bar-outer">
+                        <div id="sp-bar" class="bar-inner sp" style="width: 100%;"></div>
+                    </div>
+                    <button class="small-btn" onclick="ablateArmor()">ABLATE_ARMOR (-1)</button>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-box"><span>INT</span><strong>8</strong></div>
+                    <div class="stat-box"><span>REF</span><strong>6</strong></div>
+                    <div class="stat-box"><span>DEX</span><strong>6</strong></div>
+                    <div class="stat-box"><span>TECH</span><strong>5</strong></div>
+                    <div class="stat-box"><span>PRES</span><strong>7</strong></div>
+                    <div class="stat-box"><span>VOL</span><strong>5</strong></div>
+                    <div class="stat-box"><span>LUCK</span><strong id="luck-val">6</strong></div>
+                    <div class="stat-box"><span>EMP</span><strong>8</strong></div>
+                </div>
+
+                <div class="skills-list">
+                    <div class="skill-item"><span>TRADING (Négoce)</span><strong>+14</strong></div>
+                    <div class="skill-item"><span>PERSUASION</span><strong>+13</strong></div>
+                    <div class="skill-item"><span>HUMAN_PERCEPTION</span><strong>+13</strong></div>
+                    <div class="skill-item"><span>GAMBLING</span><strong>+14</strong></div>
+                </div>
+
+                <div class="danger-zone">
+                    <button class="cyber-btn" onclick="takeDamage(5)">TAKE_5_DMG</button>
+                    <button class="cyber-btn" onclick="resetVitals()"
+                        style="background: var(--cyber-blue); margin-top: 10px;">LONG_REST (Reset)</button>
                 </div>
             </div>
+            <button class="back-btn" onclick="switchView('dashboard')">BACK_TO_HOME</button>
+        </section>
+
+        <section id="view-dataterm" class="view">
+            <h2 class="section-title">NIGHT_CITY_DATATERM</h2>
+            <div class="wiki-search">
+                <input type="text" id="wiki-search-input" placeholder="SEARCH_LORE..." oninput="searchWiki()">
+            </div>
+            <div class="wiki-categories">
+                <button onclick="filterWiki('slang')">SLANG</button>
+                <button onclick="filterWiki('rules')">RULES</button>
+                <button onclick="filterWiki('lore')">LORE</button>
+                <button onclick="filterWiki('biotechnica')">BIOTECHNICA</button>
+            </div>
+            <div id="wiki-content" class="feed-list">
+                <!-- Wiki items will appear here -->
+            </div>
+            <button class="back-btn" onclick="switchView('dashboard')">BACK_TO_HOME</button>
         </section>
 
         <section id="view-data-pool" class="view">
@@ -105,7 +169,7 @@
     </main>
 
     <footer class="app-nav">
-        <button onclick="switchView('data-pool')">DP</button>
+        <button onclick="switchView('dataterm')">WIKI</button>
         <button onclick="switchView('dashboard')" class="active">HOME</button>
         <button onclick="switchView('carnet')">CAR</button>
     </footer>
