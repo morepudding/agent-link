@@ -311,6 +311,49 @@ main {
     text-shadow: 0 0 10px var(--cyber-blue);
 }
 
+/* --- NETWORK / CONTACTS --- */
+.network-search {
+    margin-bottom: 20px;
+}
+
+.network-search input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--cyber-yellow);
+    padding: 10px;
+    color: var(--cyber-yellow);
+    font-family: 'Rajdhani', sans-serif;
+    outline: none;
+}
+
+.contact-card {
+    background: rgba(255, 255, 255, 0.03);
+    border-left: 3px solid var(--cyber-blue);
+    padding: 15px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.contact-card h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    color: var(--cyber-blue);
+    margin-bottom: 5px;
+}
+
+.contact-role {
+    font-size: 0.7rem;
+    color: var(--cyber-yellow);
+    margin-bottom: 10px;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.contact-trust {
+    font-size: 0.8rem;
+    margin-top: 10px;
+    color: #00ff41;
+}
+
 /* --- STATS / BIO-MONITOR --- */
 .stats-container {
     display: flex;

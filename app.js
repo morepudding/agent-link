@@ -28,7 +28,14 @@ let state = {
     armor: 11,
     maxArmor: 11,
     luck: 6,
-    maxLuck: 6
+    maxLuck: 6,
+    network: [
+        { id: 1, name: 'Dr. Manganese', role: 'Ripperdoc (Heywood)', trust: 'Loyal', note: 'Ancien chirurgien militaire. Te soigne pour pas cher.' },
+        { id: 2, name: 'Short-Circuit', role: 'Techie (Watson)', trust: 'Professionnel', note: 'As du fer à souder. Vit dans un van blindé.' },
+        { id: 3, name: 'Mako', role: 'Solo Freelance', trust: 'Neutre', note: 'Le muscle quand la diplomatie échoue.' },
+        { id: 4, name: 'Vez', role: 'Fixer / Ex-Biotechnica', trust: 'En Recherche', note: 'Ton contact principal pour retrouver ta sœur.' }
+    ],
+    networkSearch: ''
 };
 
 // --- INITIALIZATION ---
@@ -37,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderNews();
     renderNotes();
     renderWiki();
+    renderNetwork();
     updateStatDisplays();
     startVitalSim();
 });
@@ -45,7 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
 function switchView(viewId) {
     // UI Feedback
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-    document.getElementById(`view-${viewId}`).classList.add('active');
+    const targetView = document.getElementById(`view-${viewId}`);
+    if (targetView) targetView.classList.add('active');
 
     // Nav active state
     document.querySelectorAll('.app-nav button').forEach(btn => {
@@ -54,6 +63,7 @@ function switchView(viewId) {
         if ((viewId === 'dataterm' && label === 'wiki') ||
             (viewId === 'dashboard' && label === 'home') ||
             (viewId === 'stats' && label === 'stats') ||
+            (viewId === 'network' && label === 'net') ||
             (viewId === 'carnet' && label === 'car')) {
             btn.classList.add('active');
         }
@@ -109,6 +119,32 @@ function filterWiki(cat) {
 function searchWiki() {
     state.wikiSearch = document.getElementById('wiki-search-input').value;
     renderWiki();
+}
+
+// --- NETWORK ---
+function renderNetwork() {
+    const container = document.getElementById('network-list');
+    if (!container) return;
+
+    const filtered = state.network.filter(contact =>
+        contact.name.toLowerCase().includes(state.networkSearch.toLowerCase()) ||
+        contact.role.toLowerCase().includes(state.networkSearch.toLowerCase()) ||
+        contact.note.toLowerCase().includes(state.networkSearch.toLowerCase())
+    );
+
+    container.innerHTML = filtered.map(contact => `
+        <div class="contact-card">
+            <h3>${contact.name}</h3>
+            <div class="contact-role">${contact.role.toUpperCase()}</div>
+            <div class="item-content">${contact.note}</div>
+            <div class="contact-trust">TRUST_LEVEL: ${contact.trust}</div>
+        </div>
+    `).join('');
+}
+
+function searchNetwork() {
+    state.networkSearch = document.getElementById('network-search-input').value;
+    renderNetwork();
 }
 
 // --- NEWS FEED ---

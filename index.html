@@ -55,9 +55,10 @@
                     <div class="card-label">STATS</div>
                     <small>BIO_MONITOR</small>
                 </button>
-                <button class="dash-card glitch-hover" onclick="switchView('carnet')">
-                    <div class="card-icon">📒</div>
-                    <div class="card-label">CARNET</div>
+                <button class="dash-card glitch-hover" onclick="switchView('network')">
+                    <div class="card-icon">🤝</div>
+                    <div class="card-label">NETWORK</div>
+                    <small>FIXER_CONTACTS</small>
                 </button>
                 <button class="dash-card glitch-hover" onclick="switchView('dataterm')">
                     <div class="card-icon">🧠</div>
@@ -65,6 +66,17 @@
                     <small>KNOWLEDGE_BASE</small>
                 </button>
             </div>
+        </section>
+
+        <section id="view-network" class="view">
+            <h2 class="section-title">STREET_NETWORK</h2>
+            <div class="network-search">
+                <input type="text" id="network-search-input" placeholder="SEARCH_CONTACTS..." oninput="searchNetwork()">
+            </div>
+            <div id="network-list" class="feed-list">
+                <!-- Contacts will appear here -->
+            </div>
+            <button class="back-btn" onclick="switchView('dashboard')">BACK_TO_HOME</button>
         </section>
 
         <section id="view-stats" class="view">
@@ -170,7 +182,9 @@
 
     <footer class="app-nav">
         <button onclick="switchView('dataterm')">WIKI</button>
+        <button onclick="switchView('network')">NET</button>
         <button onclick="switchView('dashboard')" class="active">HOME</button>
+        <button onclick="switchView('stats')">STATS</button>
         <button onclick="switchView('carnet')">CAR</button>
     </footer>
 
