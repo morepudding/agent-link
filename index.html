@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LINK_AGENT_v2.04</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="cyber-theme">
+    <div class="crt-overlay"></div>
+    <div class="scanlines"></div>
+
+    <header class="app-header">
+        <div class="vitals">
+            <div class="vital-item pulse">
+                <span class="label">HEART_RATE:</span>
+                <span class="value" id="heart-rate">72</span> BPM
+            </div>
+            <div class="vital-item">
+                <span class="label">SYNCH_LEVEL:</span>
+                <span class="value">98.2%</span>
+            </div>
+        </div>
+        <div class="system-status">
+            <div class="glitch-text" data-text="LINK_AGENT_v2.04">LINK_AGENT_v2.04</div>
+            <div class="connection-status online">CONNECTED_DP</div>
+        </div>
+    </header>
+
+    <main id="app-content">
+        <!-- Views will be injected here -->
+        <section id="view-dashboard" class="view active">
+            <div class="news-ticker">
+                <div class="ticker-label">DATA_FEED:</div>
+                <div class="ticker-content">
+                    <div class="ticker-text">BIOTECHNICA: NO_NEW_LEADS_FOUND // SEARCHING_RECORDS... // DOGFIGHTS:
+                        SOUTH_ZONE_8PM // </div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <button class="dash-card glitch-hover" onclick="switchView('data-pool')">
+                    <div class="card-icon">📡</div>
+                    <div class="card-label">DATA_POOL</div>
+                </button>
+                <button class="dash-card glitch-hover" onclick="switchView('wallet')">
+                    <div class="card-icon">💶</div>
+                    <div class="card-label">WALLET</div>
+                </button>
+                <button class="dash-card glitch-hover" onclick="switchView('carnet')">
+                    <div class="card-icon">📒</div>
+                    <div class="card-label">CARNET</div>
+                </button>
+                <div class="dash-card static alert-card">
+                    <div class="card-icon">⚠️</div>
+                    <div class="card-label">OBSESSION</div>
+                    <small>SISTER_UNKNOWN</small>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-data-pool" class="view">
+            <h2 class="section-title">NIGHT_CITY_DATA_POOL</h2>
+            <div id="news-feed" class="feed-list">
+                <!-- Data Pool items -->
+            </div>
+            <button class="back-btn" onclick="switchView('dashboard')">BACK_TO_HOME</button>
+        </section>
+
+        <section id="view-wallet" class="view">
+            <h2 class="section-title">WALLET_MANAGER</h2>
+            <div class="balance-container">
+                <span class="label">AVAILABLE_ED:</span>
+                <span class="value" id="ed-balance">1,240.00</span>
+            </div>
+            <div class="betting-interface">
+                <h3>SOUTH_ZONE_DOGFIGHTS</h3>
+                <div class="bet-controls">
+                    <input type="number" id="bet-amount" placeholder="BET_AMOUNT" min="10">
+                    <button class="cyber-btn" onclick="placeBet()">PLACE_BET</button>
+                </div>
+                <div id="bet-status"></div>
+            </div>
+            <button class="back-btn" onclick="switchView('dashboard')">BACK_TO_HOME</button>
+        </section>
+
+        <section id="view-carnet" class="view">
+            <h2 class="section-title">LINK_CARNET</h2>
+            <div class="carnet-actions">
+                <textarea id="note-input" placeholder="RECORD_THOUGHTS..."></textarea>
+                <button class="cyber-btn" onclick="addNote()">SAVE_ENTRY</button>
+            </div>
+            <div id="notes-list" class="feed-list">
+                <!-- Notes will appear here -->
+            </div>
+            <button class="back-btn" onclick="switchView('dashboard')">BACK_TO_HOME</button>
+        </section>
+    </main>
+
+    <footer class="app-nav">
+        <button onclick="switchView('data-pool')">DP</button>
+        <button onclick="switchView('dashboard')" class="active">HOME</button>
+        <button onclick="switchView('carnet')">CAR</button>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
