@@ -35,7 +35,11 @@ let state = {
         { id: 3, name: 'Mako', role: 'Solo Freelance', trust: 'Neutre', note: 'Le muscle quand la diplomatie échoue.' },
         { id: 4, name: 'Vez', role: 'Fixer / Ex-Biotechnica', trust: 'En Recherche', note: 'Ton contact principal pour retrouver ta sœur.' }
     ],
-    networkSearch: ''
+    networkSearch: '',
+    transactions: [
+        { id: 1, type: 'loss', desc: 'STREET_FOOD_SCOP', amount: 10, date: '2026-01-16' },
+        { id: 2, type: 'gain', desc: 'FIXER_COMMISSION', amount: 500, date: '2026-01-15' }
+    ]
 };
 
 // --- INITIALIZATION ---
@@ -45,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderNotes();
     renderWiki();
     renderNetwork();
+    renderTransactions();
     updateStatDisplays();
     startVitalSim();
 });
@@ -64,6 +69,7 @@ function switchView(viewId) {
             (viewId === 'dashboard' && label === 'home') ||
             (viewId === 'stats' && label === 'stats') ||
             (viewId === 'network' && label === 'net') ||
+            (viewId === 'wallet' && label === 'wallet') ||
             (viewId === 'carnet' && label === 'car')) {
             btn.classList.add('active');
         }
@@ -159,10 +165,32 @@ function renderNews() {
     `).join('');
 }
 
-// --- WALLET & BETTING ---
+// --- WALLET & ECONOMY ---
 function updateBalanceDisplay() {
     const balEl = document.getElementById('ed-balance');
     if (balEl) balEl.innerText = state.edBalance.toLocaleString('en-US', { minimumFractionDigits: 2 });
+}
+
+function renderTransactions() {
+    const container = document.getElementById('transaction-list');
+    if (!container) return;
+    container.innerHTML = state.transactions.map(tx => `
+        <div class="transaction-item ${tx.type}">
+            <span>${tx.date} | ${tx.desc}</span>
+            <strong>${tx.type === 'gain' ? '+' : '-'}${tx.amount} EB</strong>
+        </div>
+    `).join('');
+}
+
+function addTransaction(type, desc, amount) {
+    state.transactions.unshift({
+        id: Date.now(),
+        type,
+        desc,
+        amount,
+        date: new Date().toISOString().split('T')[0]
+    });
+    renderTransactions();
 }
 
 function placeBet() {
@@ -180,6 +208,7 @@ function placeBet() {
     }
 
     state.edBalance -= amount;
+    addTransaction('loss', 'DOGFIGHT_BET', amount);
     updateBalanceDisplay();
     status.innerHTML = 'BET_PLACED_WAITING_RES...';
 
@@ -189,6 +218,7 @@ function placeBet() {
         if (win) {
             const winnings = amount * 2.5;
             state.edBalance += winnings;
+            addTransaction('gain', 'DOGFIGHT_WIN', winnings);
             status.innerHTML = `<span style="color:#00ff00">WIN! +${winnings} ED</span>`;
         } else {
             status.innerHTML = '<span style="color:red">LOST_BET</span>';

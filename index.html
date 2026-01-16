@@ -156,6 +156,7 @@
                 <span class="label">AVAILABLE_ED:</span>
                 <span class="value" id="ed-balance">1,240.00</span>
             </div>
+
             <div class="betting-interface">
                 <h3>SOUTH_ZONE_DOGFIGHTS</h3>
                 <div class="bet-controls">
@@ -163,6 +164,13 @@
                     <button class="cyber-btn" onclick="placeBet()">PLACE_BET</button>
                 </div>
                 <div id="bet-status"></div>
+            </div>
+
+            <div class="transaction-history">
+                <h3 class="small-title">TRANSACTION_LOG</h3>
+                <div id="transaction-list" class="feed-list">
+                    <!-- Transactions will appear here -->
+                </div>
             </div>
             <button class="back-btn" onclick="switchView('dashboard')">BACK_TO_HOME</button>
         </section>

@@ -153,6 +153,38 @@ main {
     overflow: hidden;
 }
 
+/* --- WALLET / ECONOMY --- */
+.transaction-history {
+    margin-top: 30px;
+}
+
+.small-title {
+    font-size: 0.8rem;
+    color: var(--cyber-blue);
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+    padding-bottom: 5px;
+}
+
+.transaction-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.02);
+    border-left: 2px solid #555;
+}
+
+.transaction-item.gain {
+    border-left-color: #00ff41;
+    color: #00ff41;
+}
+
+.transaction-item.loss {
+    border-left-color: var(--cyber-red);
+    color: var(--cyber-red);
+}
+
 .ticker-text {
     display: inline-block;
     white-space: nowrap;
