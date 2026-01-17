@@ -1,0 +1,9 @@
+For those who are seeing the forms highlighted in blue and wish to remove the highlight follow these instructions.
+
+In your PDF viewer of choice go to
+
+1. Go to File/Edit > Preferences > Forms
+2. Go to "Highlight all fields"
+3. Uncheck the box
+
+Thats its, now your character sheet will be form box free 

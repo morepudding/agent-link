@@ -19,7 +19,12 @@ let state = {
         { id: 8, cat: 'rules', title: 'OPERATOR (FIXER)', content: 'Ta capacité de rôle. Permet de trouver du matos rare, de négocier les prix (Haggle) et d\'avoir des contacts partout.' },
         { id: 9, cat: 'lore', title: 'THE GLEN (HEYWOOD)', content: 'Ton quartier. Riche et propre au Nord (City Hall), il devient dangereux et pauvre au Sud, vers Vista del Rey.' },
         { id: 10, cat: 'biotechnica', title: 'CHOOH2', content: 'Le carburant mondial créé par Biotechnica à partir de levure génétiquement modifiée. Ils détiennent tous les brevets.' },
-        { id: 11, cat: 'biotechnica', title: 'PROJECT NIGHTINGALE', content: 'Rumeurs d\'expériences de clonage humain illégales. Un sujet sensible pour Link.' }
+        { id: 11, cat: 'biotechnica', title: 'PROJECT NIGHTINGALE', content: 'Rumeurs d\'expériences de clonage humain illégales. Un sujet sensible pour Link.' },
+        { id: 12, cat: 'rules', title: 'COMBAT (DISTANCE)', content: 'REF + Compétence + 1d10 vs DV de portée. Si REF 8+, tu peux esquiver les balles avec DEX + Esquive.' },
+        { id: 13, cat: 'rules', title: 'COMBAT (MELEE)', content: 'DEX + Compétence + 1d10 vs DEX + Esquive. Ignore la moitié de l\'armure (SP).' },
+        { id: 14, cat: 'rules', title: 'BLESSURES GRAVES', content: 'Moins de la moitié des PV = -2 à tout. À 0 PV = Coups mortels (-4 actions) et jets de mort.' },
+        { id: 15, cat: 'rules', title: 'ARMURE (ABLATION)', content: 'Chaque dégât reçu réduit ton SP de 1 point définitivement jusqu\'à réparation.' },
+        { id: 16, cat: 'rules', title: 'GUÉRISON', content: 'Une fois stabilisé, tu récupères des PV égaux à ton BODY chaque jour de repos.' }
     ],
     wikiFilter: 'all',
     wikiSearch: '',
