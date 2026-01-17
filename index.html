@@ -137,59 +137,73 @@
         </section>
 
         <section id="view-stats" class="view">
-            <h2 class="section-title">LINK_STATUS</h2>
+            <h2 class="section-title">LINK_CHARACTER_MANIFEST</h2>
+
+            <div class="stats-header" style="display: flex; gap: 10px; margin-bottom: 15px;">
+                <button id="toggle-bio-btn" class="cyber-btn" onclick="toggleStatsBio()"
+                    style="flex: 1;">SHOW_DOSSIER_PERSONNEL</button>
+            </div>
 
             <div class="stats-container">
-                <div class="vital-bar-container">
-                    <div class="bar-label">HEALTH_POINTS (<span id="hp-val">40</span>/40)</div>
-                    <div class="bar-outer">
-                        <div id="hp-bar" class="bar-inner hp" style="width: 100%;"></div>
+                <div class="stats-container-inner">
+                    <div class="character-identity glitch-border">
+                        <div class="id-row"><span>NAME:</span> <strong>LINK</strong></div>
+                        <div class="id-row"><span>ROLE:</span> <strong>FIXER (OPERATOR LVL 4)</strong></div>
                     </div>
-                </div>
 
-                <div class="vital-bar-container">
-                    <div class="bar-label">ARMOR_JACK (<span id="sp-val">11</span>/11)</div>
-                    <div class="bar-outer">
-                        <div id="sp-bar" class="bar-inner sp" style="width: 100%;"></div>
+                    <div class="vitals-section">
+                        <div class="vital-bar-container">
+                            <div class="bar-label">BIOMONITOR_HP (<span id="hp-val">40</span>/40)</div>
+                            <div class="bar-outer">
+                                <div id="hp-bar" class="bar-inner hp" style="width: 100%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="vital-bar-container">
+                            <div class="bar-label">ARMOR_JACK (<span id="sp-val">11</span>/11)</div>
+                            <div class="bar-outer">
+                                <div id="sp-bar" class="bar-inner sp" style="width: 100%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="vital-bar-container">
+                            <div class="bar-label">HUMANITY (<span id="hum-val">80</span>/80)</div>
+                            <div class="bar-outer">
+                                <div id="hum-bar" class="bar-inner humanity" style="width: 100%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="death-save-badge">
+                            <span>DEATH_SAVE:</span> <strong id="death-save-val">6</strong>
+                        </div>
                     </div>
-                    <button class="small-btn" onclick="ablateArmor()">ABLATE_ARMOR (-1)</button>
-                </div>
 
-                <div class="vital-bar-container">
-                    <div class="bar-label">HUMANITY (<span id="hum-val">40</span>/40)</div>
-                    <div class="bar-outer">
-                        <div id="hum-bar" class="bar-inner humanity"
-                            style="width: 100%; background: var(--cyber-pink);"></div>
+                    <h3 class="small-title">PRIMARY_CORE_STATS</h3>
+                    <div class="stats-grid">
+                        <div class="stat-box"><span>INT</span><strong id="stat-INT">8</strong></div>
+                        <div class="stat-box"><span>REF</span><strong id="stat-REF">6</strong></div>
+                        <div class="stat-box"><span>DEX</span><strong id="stat-DEX">6</strong></div>
+                        <div class="stat-box"><span>TECH</span><strong id="stat-TECH">5</strong></div>
+                        <div class="stat-box"><span>COOL</span><strong id="stat-COOL">7</strong></div>
+                        <div class="stat-box"><span>WILL</span><strong id="stat-WILL">5</strong></div>
+                        <div class="stat-box"><span>LUCK</span><strong id="stat-LUCK">6</strong></div>
+                        <div class="stat-box"><span>MOVE</span><strong id="stat-MOVE">5</strong></div>
+                        <div class="stat-box"><span>BODY</span><strong id="stat-BODY">6</strong></div>
+                        <div class="stat-box"><span>EMP</span><strong id="stat-EMP">8</strong></div>
                     </div>
-                </div>
 
-                <div class="stats-grid">
-                    <div class="stat-box"><span>INT</span><strong>8</strong></div>
-                    <div class="stat-box"><span>REF</span><strong>6</strong></div>
-                    <div class="stat-box"><span>DEX</span><strong>6</strong></div>
-                    <div class="stat-box"><span>TECH</span><strong>5</strong></div>
-                    <div class="stat-box"><span>PRES</span><strong>7</strong></div>
-                    <div class="stat-box"><span>VOL</span><strong>5</strong></div>
-                    <div class="stat-box"><span>LUCK</span><strong id="luck-val">6</strong></div>
-                    <div class="stat-box"><span>EMP</span><strong>8</strong></div>
-                    <div class="stat-box"><span>REP</span><strong id="rep-val">2</strong></div>
-                </div>
+                    <h3 class="small-title">SKILLS_DATABASE</h3>
+                    <div id="skills-container" class="glitch-border"
+                        style="padding: 10px; background: rgba(0,0,0,0.3); margin-bottom: 20px;">
+                        <!-- Skills will be injected here -->
+                    </div>
 
-                <div class="skills-list">
-                    <div class="skill-item"><span>TRADING (Négoce)</span><strong>+14</strong></div>
-                    <div class="skill-item"><span>PERSUASION</span><strong>+13</strong></div>
-                    <div class="skill-item"><span>HUMAN_PERCEPTION</span><strong>+13</strong></div>
-                    <div class="skill-item"><span>GAMBLING</span><strong>+14</strong></div>
-                </div>
+                    <h3 class="small-title">WEAPONS_SYSTEMS</h3>
 
-                <h3 class="small-title">WEAPONS_SYSTEMS</h3>
-                <div id="weapons-list" class="skills-list">
-                    <!-- Weapons injected here -->
-                </div>
+                </div> <!-- End stats-container-inner -->
 
-                <h3 class="small-title">CYBERWARE_CONSTRUCT</h3>
-                <div id="cyberware-list" class="skills-list">
-                    <!-- Cyberware injected here -->
+                <div id="bio-container" style="display: none;">
+                    <!-- Bio injected here -->
                 </div>
 
                 <div class="danger-zone">

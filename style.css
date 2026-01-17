@@ -554,8 +554,43 @@ main {
 
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+}
+
+.character-identity {
+    margin-bottom: 20px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.id-row {
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+.id-row span {
+    color: var(--cyber-blue);
+    margin-right: 5px;
+}
+
+.vitals-section {
+    display: flex;
+    flex-direction: column;
     gap: 10px;
+    margin-bottom: 20px;
+}
+
+.death-save-badge {
+    background: var(--cyber-red);
+    color: var(--bg-dark);
+    padding: 5px 10px;
+    font-weight: bold;
+    font-family: 'Orbitron', sans-serif;
+    display: inline-block;
+    font-size: 0.8rem;
+    clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
 }
 
 .stat-box {
@@ -758,5 +793,42 @@ main {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+.bio-row {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+.bio-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.photo-placeholder {
+    position: relative;
+}
+
+.scanline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.1) 50%);
+    background-size: 100% 4px;
+    pointer-events: none;
+    animation: scan 10s linear infinite;
+}
+
+@keyframes scan {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(100%);
     }
 }

@@ -1,6 +1,6 @@
 // --- STATE MANAGEMENT ---
 let state = {
-    edBalance: 1240.0,
+    edBalance: 4140.0,
     notes: JSON.parse(localStorage.getItem('link_notes')) || [],
     heartRate: 72,
     news: [
@@ -37,8 +37,45 @@ let state = {
     maxHp: 40,
     armor: 11,
     maxArmor: 11,
-    luck: 6,
-    maxLuck: 6,
+    reputation: 2,
+    roleAbility: { name: 'Operator', level: 4 },
+    humanity: 80,
+    maxHumanity: 80,
+    stats: {
+        INT: 8, REF: 6, DEX: 6, TECH: 5, COOL: 7,
+        WILL: 5, LUCK: 6, MOVE: 5, BODY: 6, EMP: 8
+    },
+    bio: {
+        origine: "Europe de l'Ouest",
+        background: "Ancien sujet d'expérience corporatiste chez Biotechnica.",
+        motivation: "Loyauté et Amitié. Cherche à comprendre la trahison de sa sœur.",
+        sister: "Sienna, sa jumelle. A tué leurs parents et le traque aujourd'hui.",
+        base: "The Glen (Heywood) - Bar 'The Neon Archive'",
+        lifestyle: "Appartement miteux, fumeur invétéré, accro au jeu.",
+        traits: "Extraverti, amical, mais maladroit."
+    },
+    skills: [
+        { cat: 'Contrôle', name: 'Équitation', niv: 0, carac: 'REF', base: 6 },
+        { cat: 'Contrôle', name: 'Pilotage (Terrestre)', niv: 0, carac: 'REF', base: 6 },
+        { cat: 'Combat', name: 'Arme de mêlée', niv: 2, carac: 'DEX', base: 8 },
+        { cat: 'Combat', name: 'Art martial', niv: 0, carac: 'DEX', base: 6 },
+        { cat: 'Combat', name: 'Bagarre', niv: 0, carac: 'DEX', base: 6 },
+        { cat: 'Corps', name: 'Athlétisme', niv: 2, carac: 'DEX', base: 8 },
+        { cat: 'Corps', name: 'Endurance', niv: 0, carac: 'WILL', base: 5 },
+        { cat: 'Éducation', name: 'Bibliothèque', niv: 4, carac: 'INT', base: 12 },
+        { cat: 'Éducation', name: 'Gestion d\'affaire', niv: 6, carac: 'INT', base: 14 },
+        { cat: 'Éducation', name: 'Jeux de hasard', niv: 6, carac: 'INT', base: 14 },
+        { cat: 'Éducation', name: 'Langue (Arabe)', niv: 4, carac: 'INT', base: 12 },
+        { cat: 'Sociabilité', name: 'Conversation', niv: 6, carac: 'EMP', base: 14 },
+        { cat: 'Sociabilité', name: 'Corruption', niv: 6, carac: 'COOL', base: 13 },
+        { cat: 'Sociabilité', name: 'Persuasion', niv: 6, carac: 'COOL', base: 13 },
+        { cat: 'Sociabilité', name: 'Négoce', niv: 6, carac: 'COOL', base: 13 },
+        { cat: 'Sociabilité', name: 'Psychologie', niv: 5, carac: 'EMP', base: 13 },
+        { cat: 'Sociabilité', name: 'Connaissance de la rue', niv: 3, carac: 'INT', base: 11 },
+        { cat: 'Vigilance', name: 'Perception', niv: 5, carac: 'INT', base: 13 },
+        { cat: 'Vigilance', name: 'Concentration', niv: 2, carac: 'WILL', base: 7 },
+        { cat: 'Technique', name: 'Premiers secours', niv: 2, carac: 'TECH', base: 7 }
+    ],
     network: [
         { id: 1, name: 'Dr. Manganese', role: 'Ripperdoc (Heywood)', trust: 'Loyal', note: 'Ancien chirurgien militaire. Te soigne pour pas cher.' },
         { id: 2, name: 'Short-Circuit', role: 'Techie (Watson)', trust: 'Professionnel', note: 'As du fer à souder. Vit dans un van blindé.' },
@@ -50,24 +87,26 @@ let state = {
         { id: 1, type: 'loss', desc: 'STREET_FOOD_SCOP', amount: 10, date: '2026-01-16' },
         { id: 2, type: 'gain', desc: 'FIXER_COMMISSION', amount: 500, date: '2026-01-15' }
     ],
-    humanity: 40,
-    maxHumanity: 40,
+    humanity: 80,
+    maxHumanity: 80,
     weapons: [
-        { name: 'Heavy Pistol', dmg: '3d6', rof: 2 },
-        { name: 'Combat Knife', dmg: '1d6', rof: 2 }
+        { name: 'Pistolet Lourd', dmg: '3d6', rof: 2, ammo: 8, maxAmmo: 8 }
     ],
     cyberware: [
-        { name: 'Neural Link', effect: 'Basis for most cyberware' },
-        { name: 'Interface Plugs', effect: 'Direct connection to machines' }
+        { name: 'Câblage Neural', effect: 'Base pour implants' },
+        { name: 'Agent Interne', effect: 'Modèle expérimental Biotechnica' }
     ],
     deals: JSON.parse(localStorage.getItem('link_deals')) || [],
     body: 6,
     reputation: 2,
     inventory: JSON.parse(localStorage.getItem('link_inventory')) || [
-        { id: 1, name: 'Heavy Pistol', weight: 1.5, icon: '🔫', type: 'weapon', desc: '3d6 DMG, ROF 2' },
-        { name: 'Heavy Armor Jack', weight: 5, icon: '🛡️', type: 'armor', desc: 'SP 11' },
-        { name: 'Med-Kit', weight: 0.5, icon: '💉', type: 'gear', desc: 'First aid supplies' },
-        { name: 'Encryption Key', weight: 0.1, icon: '🔑', type: 'misc', desc: 'Biotechnica data' }
+        { id: 1, name: 'Pistolet Lourd', weight: 1.5, icon: '🔫', type: 'weapon', desc: '3d6 DMG, ROF 2' },
+        { id: 2, name: 'Veste Blindée Légère', weight: 4, icon: '🛡️', type: 'armor', desc: 'SP 11' },
+        { id: 3, name: 'Mallette Blindée', weight: 3, icon: '💼', type: 'gear', desc: 'Transport sécurisé' },
+        { id: 4, name: 'Kit de Soins Personnel', weight: 1, icon: '💊', type: 'gear', desc: 'Premiers secours' },
+        { id: 5, name: 'Téléphone Jetable x2', weight: 0.2, icon: '📱', type: 'misc', desc: 'Communications anonymes' },
+        { id: 6, name: 'Briquet et Cigarettes', weight: 0.1, icon: '🚬', type: 'misc', desc: 'Addiction (Paris)' },
+        { id: 7, name: 'Munitions (50)', weight: 1, icon: '📦', type: 'ammo', desc: 'Balles pistolet lourd' }
     ]
 };
 
@@ -83,6 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderWeapons();
     renderCyberware();
     renderInventory();
+    renderSkills();
     updateStatDisplays();
     startVitalSim();
 });
@@ -420,9 +460,31 @@ function updateStatDisplays() {
         spBar.style.width = `${percent}%`;
     }
 
-    // Luck
-    const luckVal = document.getElementById('luck-val');
-    if (luckVal) luckVal.innerText = state.luck;
+    // Humanity
+    const humVal = document.getElementById('hum-val');
+    const humBar = document.getElementById('hum-bar');
+    if (humVal) humVal.innerText = state.humanity;
+    if (humBar) {
+        const percent = (state.humanity / state.maxHumanity) * 100;
+        humBar.style.width = `${percent}%`;
+        humBar.style.background = 'var(--cyber-pink)';
+    }
+
+    // Death Save
+    const deathSaveVal = document.getElementById('death-save-val');
+    if (deathSaveVal) deathSaveVal.innerText = state.stats.BODY;
+
+    // Luck (Legacy keep)
+    const luckValLegacy = document.getElementById('luck-val');
+    if (luckValLegacy) luckValLegacy.innerText = state.stats.LUCK;
+
+    // Stats Grid Integration
+    if (state.stats) {
+        Object.keys(state.stats).forEach(key => {
+            const el = document.getElementById(`stat-${key}`);
+            if (el) el.innerText = state.stats[key];
+        });
+    }
 }
 
 function takeDamage(amt) {
@@ -441,7 +503,107 @@ function ablateArmor() {
 function resetVitals() {
     state.hp = state.maxHp;
     state.armor = state.maxArmor;
-    state.luck = state.maxLuck;
+    state.humanity = state.maxHumanity;
     updateStatDisplays();
+}
+
+// --- SKILLS ---
+function renderSkills() {
+    const container = document.getElementById('skills-container');
+    if (!container) return;
+
+    const skills = state.skills;
+
+    container.innerHTML = `
+        <div class="skills-header" style="margin-bottom: 10px;">
+            <input type="text" placeholder="SEARCH_SKILLS..." oninput="filterSkills(this.value)" 
+                   style="width: 100%; padding: 8px; background: rgba(0,240,255,0.1); border: 1px solid var(--cyber-blue); color: var(--cyber-blue); font-family: 'Rajdhani', sans-serif;">
+        </div>
+        <div class="skills-scroll" style="max-height: 300px; overflow-y: auto; padding-right: 5px;">
+            ${skills.map(skill => `
+                <div class="skill-item" style="display: flex; justify-content: space-between; align-items: center; padding: 8px; border-bottom: 1px solid rgba(0,240,255,0.1); font-size: 0.8rem;">
+                    <div class="skill-info">
+                        <strong style="color: var(--cyber-yellow); display: block;">${skill.name.toUpperCase()}</strong>
+                        <small style="opacity: 0.6;">${skill.carac} | NIV: ${skill.niv}</small>
+                    </div>
+                    <div class="skill-hit" style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-weight: bold; color: var(--cyber-blue);">+${skill.base}</span>
+                        <button class="small-btn" onclick="rollSkill('${skill.name}', ${skill.base})" style="padding: 2px 8px;">ROLL</button>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
+function rollSkill(name, base) {
+    const roll = Math.floor(Math.random() * 10) + 1;
+    const total = roll + base;
+    let message = `ROLL: ${name.toUpperCase()}\nRESULT: ${roll} + ${base} = ${total}`;
+
+    if (roll === 10) message += "\n> CRITICAL_SUCCESS! [+1d10]";
+    if (roll === 1) message += "\n> CRITICAL_FAILURE! [-1d10]";
+
+    alert(message);
+}
+
+function filterSkills(query) {
+    const items = document.querySelectorAll('.skill-item');
+    items.forEach(item => {
+        const name = item.querySelector('strong').innerText.toLowerCase();
+        item.style.display = name.includes(query.toLowerCase()) ? 'flex' : 'none';
+    });
+}
+
+// --- BIO & DOSSIER ---
+function toggleStatsBio() {
+    const statsContainer = document.querySelector('.stats-container-inner');
+    const bioContainer = document.getElementById('bio-container');
+    const btn = document.getElementById('toggle-bio-btn');
+
+    if (bioContainer.style.display === 'none') {
+        bioContainer.style.display = 'block';
+        statsContainer.style.display = 'none';
+        btn.innerText = 'SHOW_VITALS_&_STATS';
+        renderBio();
+    } else {
+        bioContainer.style.display = 'none';
+        statsContainer.style.display = 'block';
+        btn.innerText = 'SHOW_DOSSIER_PERSONNEL';
+    }
+}
+
+function renderBio() {
+    const container = document.getElementById('bio-container');
+    if (!container) return;
+
+    const b = state.bio;
+    container.innerHTML = `
+        <div class="bio-card glitch-border" style="padding: 15px; background: rgba(0,0,0,0.4); border-left: 3px solid var(--cyber-pink);">
+            <div class="bio-row" style="margin-bottom: 8px;"><span style="color: var(--cyber-blue); font-weight: bold;">ORIGINE:</span> ${b.origine}</div>
+            <div class="bio-row" style="margin-bottom: 8px;"><span style="color: var(--cyber-blue); font-weight: bold;">BACKSTORY:</span> ${b.background}</div>
+            <div class="bio-row" style="margin-bottom: 8px; color: var(--cyber-pink);"><span style="font-weight: bold;">MENACE:</span> ${b.sister}</div>
+            <hr style="border: 0; border-top: 1px dashed var(--cyber-blue); margin: 10px 0;">
+            <div class="bio-row" style="margin-bottom: 8px;"><span style="color: var(--cyber-yellow); font-weight: bold;">ROLE_ABILITY:</span> ${state.roleAbility.name.toUpperCase()} (LVL ${state.roleAbility.level})</div>
+            <div class="bio-row" style="margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+                <span><span style="color: var(--cyber-yellow); font-weight: bold;">REPUTATION:</span> ${state.reputation}</span>
+                <button class="roll-btn" onclick="rollFacedown()" style="padding: 2px 8px; font-size: 0.6rem;">FACEDOWN_ROLL</button>
+            </div>
+            <hr style="border: 0; border-top: 1px dashed var(--cyber-blue); margin: 10px 0;">
+            <div class="bio-row" style="margin-bottom: 8px;"><span style="color: var(--cyber-blue); font-weight: bold;">MOTIVATION:</span> ${b.motivation}</div>
+            <div class="bio-row" style="margin-bottom: 8px;"><span style="color: var(--cyber-blue); font-weight: bold;">BASE_OP:</span> ${b.base}</div>
+            <div class="bio-row" style="margin-bottom: 8px;"><span style="color: var(--cyber-blue); font-weight: bold;">TRAITS:</span> ${b.traits}</div>
+            <div class="bio-row" style="margin-bottom: 8px;"><span style="color: var(--cyber-blue); font-weight: bold;">LIFESTYLE:</span> ${b.lifestyle}</div>
+        </div>
+        <div class="photo-placeholder glitch-border" style="margin-top: 20px; height: 150px; background: url('https://placehold.co/400x150/000/0ff?text=BIOTECHNICA_SUBJECT_LINK') center/cover;">
+            <div class="scanline"></div>
+        </div>
+    `;
+}
+
+function rollFacedown() {
+    const roll = Math.floor(Math.random() * 10) + 1;
+    const total = roll + state.stats.COOL + state.reputation;
+    alert(`FACEDOWN_ROLL\nRESULT: ${roll} + COOL(${state.stats.COOL}) + REP(${state.reputation}) = ${total}`);
 }
 
