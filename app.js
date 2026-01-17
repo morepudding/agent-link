@@ -24,7 +24,12 @@ let state = {
         { id: 13, cat: 'rules', title: 'COMBAT (MELEE)', content: 'DEX + Compétence + 1d10 vs DEX + Esquive. Ignore la moitié de l\'armure (SP).' },
         { id: 14, cat: 'rules', title: 'BLESSURES GRAVES', content: 'Moins de la moitié des PV = -2 à tout. À 0 PV = Coups mortels (-4 actions) et jets de mort.' },
         { id: 15, cat: 'rules', title: 'ARMURE (ABLATION)', content: 'Chaque dégât reçu réduit ton SP de 1 point définitivement jusqu\'à réparation.' },
-        { id: 16, cat: 'rules', title: 'GUÉRISON', content: 'Une fois stabilisé, tu récupères des PV égaux à ton BODY chaque jour de repos.' }
+        { id: 16, cat: 'rules', title: 'GUÉRISON', content: 'Une fois stabilisé, tu récupères des PV égaux à ton BODY chaque jour de repos.' },
+        { id: 17, cat: 'rules', title: 'DIFFICULTÉS (DV)', content: 'Simple: 9, Quotidien: 13, Difficile: 15, Pro: 17, Héroïque: 21, Incroyable: 24, Légendaire: 29.' },
+        { id: 18, cat: 'rules', title: 'NETRUNNING', content: 'Interface + 1d10 vs DV. Skills: Scanner (trouver), Backdoor (mot de passe), Zap (attaquer 1d6).' },
+        { id: 19, cat: 'rules', title: 'FACEDOWN', content: 'COOL + Réputation + 1d10 vs COOL + Réputation + 1d10. Le perdant a un malus de -2.' },
+        { id: 20, cat: 'rules', title: 'VÉHICULES (SDP)', content: 'Points de structure. Si SDP=0, le véhicule est détruit. Réparable via Tech + Véhicule.' },
+        { id: 21, cat: 'rules', title: 'ESQUIVE VÉHICULE', content: 'DEX + Esquive + 1d10 contre DV 13 pour un piéton qui esquive un véhicule en mouvement.' }
     ],
     wikiFilter: 'all',
     wikiSearch: '',
@@ -57,6 +62,7 @@ let state = {
     ],
     deals: JSON.parse(localStorage.getItem('link_deals')) || [],
     body: 6,
+    reputation: 2,
     inventory: JSON.parse(localStorage.getItem('link_inventory')) || [
         { id: 1, name: 'Heavy Pistol', weight: 1.5, icon: '🔫', type: 'weapon', desc: '3d6 DMG, ROF 2' },
         { name: 'Heavy Armor Jack', weight: 5, icon: '🛡️', type: 'armor', desc: 'SP 11' },
