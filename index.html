@@ -77,6 +77,12 @@
                     <div class="card-label">SISTER_HUNT</div>
                     <small>SEARCH_ARCHIVES</small>
                 </button>
+                <button class="dash-card glitch-hover" onclick="switchView('map')"
+                    style="border-color: var(--cyber-blue);">
+                    <div class="card-icon">🗺️</div>
+                    <div class="card-label">CITY_MAP</div>
+                    <small>NAVIGATION</small>
+                </button>
             </div>
         </section>
 
@@ -132,6 +138,14 @@
                     <button class="small-btn" onclick="ablateArmor()">ABLATE_ARMOR (-1)</button>
                 </div>
 
+                <div class="vital-bar-container">
+                    <div class="bar-label">HUMANITY (<span id="hum-val">40</span>/40)</div>
+                    <div class="bar-outer">
+                        <div id="hum-bar" class="bar-inner humanity"
+                            style="width: 100%; background: var(--cyber-pink);"></div>
+                    </div>
+                </div>
+
                 <div class="stats-grid">
                     <div class="stat-box"><span>INT</span><strong>8</strong></div>
                     <div class="stat-box"><span>REF</span><strong>6</strong></div>
@@ -148,6 +162,16 @@
                     <div class="skill-item"><span>PERSUASION</span><strong>+13</strong></div>
                     <div class="skill-item"><span>HUMAN_PERCEPTION</span><strong>+13</strong></div>
                     <div class="skill-item"><span>GAMBLING</span><strong>+14</strong></div>
+                </div>
+
+                <h3 class="small-title">WEAPONS_SYSTEMS</h3>
+                <div id="weapons-list" class="skills-list">
+                    <!-- Weapons injected here -->
+                </div>
+
+                <h3 class="small-title">CYBERWARE_CONSTRUCT</h3>
+                <div id="cyberware-list" class="skills-list">
+                    <!-- Cyberware injected here -->
                 </div>
 
                 <div class="danger-zone">
@@ -200,10 +224,58 @@
                 <div id="bet-status"></div>
             </div>
 
+            <div class="deal-logger glitch-border" style="margin: 20px 0; padding: 10px;">
+                <h3 class="small-title">LOG_NEW_DEAL</h3>
+                <div class="deal-form">
+                    <input type="text" id="deal-client" placeholder="CLIENT_NAME">
+                    <input type="text" id="deal-item" placeholder="ITEM_SOLD">
+                    <input type="number" id="deal-price" placeholder="PRICE_EB">
+                    <input type="number" id="deal-comm" placeholder="COMMISSION_%">
+                    <button class="cyber-btn" onclick="logDeal()"
+                        style="width:100%; margin-top:10px;">LOG_TRANSACTION</button>
+                </div>
+            </div>
+
             <div class="transaction-history">
                 <h3 class="small-title">TRANSACTION_LOG</h3>
                 <div id="transaction-list" class="feed-list">
                     <!-- Transactions will appear here -->
+                </div>
+            </div>
+
+            <div class="deals-history">
+                <h3 class="small-title">DEALS_LEDGER</h3>
+                <div id="deals-log-list" class="feed-list">
+                    <!-- Deals will appear here -->
+                </div>
+            </div>
+            <button class="back-btn" onclick="switchView('dashboard')">BACK_TO_HOME</button>
+        </section>
+
+        <section id="view-map" class="view">
+            <h2 class="section-title">NIGHT_CITY_MAP_v1.0</h2>
+            <div class="map-container glitch-border"
+                style="background: rgba(0,0,0,0.5); padding: 15px; min-height: 200px;">
+                <p style="color: var(--cyber-blue); font-family: 'Rajdhani', sans-serif;">[LOCALIZING_USER_AGENT...]</p>
+                <p><strong>POSITION:</strong> HEYWOOD - THE GLEN</p>
+                <hr style="border: 0.5px solid var(--cyber-blue); margin: 10px 0;">
+                <p>Consultez le document de référence pour les détails des secteurs :</p>
+                <a href="NIGHT_CITY_MAP.md" target="_blank" class="cyber-btn"
+                    style="display:inline-block; text-decoration:none; text-align:center;">OPEN_DETAILED_MAP_DOC</a>
+
+                <div class="map-sectors" style="margin-top: 15px;">
+                    <div class="wiki-item">
+                        <h3>Heywood</h3>
+                        <p>Status: SAFE_ZONE (mostly)</p>
+                    </div>
+                    <div class="wiki-item">
+                        <h3>Watson</h3>
+                        <p>Status: GANG_ACTIVITY_HIGH</p>
+                    </div>
+                    <div class="wiki-item">
+                        <h3>Pacifica</h3>
+                        <p>Status: EXTREME_DANGER</p>
+                    </div>
                 </div>
             </div>
             <button class="back-btn" onclick="switchView('dashboard')">BACK_TO_HOME</button>
@@ -226,8 +298,9 @@
         <button onclick="switchView('dataterm')">WIKI</button>
         <button onclick="switchView('network')">NET</button>
         <button onclick="switchView('dashboard')" class="active">HOME</button>
+        <button onclick="switchView('wallet')">WALLET</button>
+        <button onclick="switchView('map')">MAP</button>
         <button onclick="switchView('stats')">STATS</button>
-        <button onclick="switchView('carnet')">CAR</button>
     </footer>
 
     <script src="app.js"></script>

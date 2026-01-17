@@ -2,6 +2,7 @@
     --cyber-yellow: #f3e600;
     --cyber-red: #ff003c;
     --cyber-blue: #00f0ff;
+    --cyber-pink: #ff00ff;
     --bg-dark: #050a0e;
     --panel-dark: #0a1014;
     --text-main: #f0f0f0;
@@ -183,6 +184,16 @@ main {
 .transaction-item.loss {
     border-left-color: var(--cyber-red);
     color: var(--cyber-red);
+}
+
+.map-sectors .wiki-item {
+    margin-bottom: 5px;
+    border-left: 2px solid var(--cyber-blue);
+}
+
+.map-sectors h3 {
+    font-size: 0.9rem;
+    margin-bottom: 0;
 }
 
 .ticker-text {

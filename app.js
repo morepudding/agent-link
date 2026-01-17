@@ -36,10 +36,21 @@ let state = {
         { id: 4, name: 'Vez', role: 'Fixer / Ex-Biotechnica', trust: 'En Recherche', note: 'Ton contact principal pour retrouver ta sœur.' }
     ],
     networkSearch: '',
-    transactions: [
+    transactions: JSON.parse(localStorage.getItem('link_transactions')) || [
         { id: 1, type: 'loss', desc: 'STREET_FOOD_SCOP', amount: 10, date: '2026-01-16' },
         { id: 2, type: 'gain', desc: 'FIXER_COMMISSION', amount: 500, date: '2026-01-15' }
-    ]
+    ],
+    humanity: 40,
+    maxHumanity: 40,
+    weapons: [
+        { name: 'Heavy Pistol', dmg: '3d6', rof: 2 },
+        { name: 'Combat Knife', dmg: '1d6', rof: 2 }
+    ],
+    cyberware: [
+        { name: 'Neural Link', effect: 'Basis for most cyberware' },
+        { name: 'Interface Plugs', effect: 'Direct connection to machines' }
+    ],
+    deals: JSON.parse(localStorage.getItem('link_deals')) || []
 };
 
 // --- INITIALIZATION ---
@@ -50,6 +61,9 @@ document.addEventListener('DOMContentLoaded', () => {
     renderWiki();
     renderNetwork();
     renderTransactions();
+    renderDeals();
+    renderWeapons();
+    renderCyberware();
     updateStatDisplays();
     startVitalSim();
 });
@@ -190,7 +204,47 @@ function addTransaction(type, desc, amount) {
         amount,
         date: new Date().toISOString().split('T')[0]
     });
+    localStorage.setItem('link_transactions', JSON.stringify(state.transactions));
     renderTransactions();
+}
+
+function logDeal() {
+    const client = document.getElementById('deal-client').value;
+    const item = document.getElementById('deal-item').value;
+    const price = parseFloat(document.getElementById('deal-price').value);
+    const commPct = parseFloat(document.getElementById('deal-comm').value) / 100;
+
+    if (!client || !item || isNaN(price) || isNaN(commPct)) return;
+
+    const commission = price * commPct;
+    const deal = { id: Date.now(), client, item, price, commission, date: new Date().toLocaleDateString() };
+
+    state.deals.unshift(deal);
+    state.edBalance += commission;
+
+    addTransaction('gain', `COMMISSION: ${item} (${client})`, commission);
+    localStorage.setItem('link_deals', JSON.stringify(state.deals));
+    updateBalanceDisplay();
+    renderDeals();
+
+    // Clear form
+    document.getElementById('deal-client').value = '';
+    document.getElementById('deal-item').value = '';
+    document.getElementById('deal-price').value = '';
+}
+
+function renderDeals() {
+    const container = document.getElementById('deals-log-list');
+    if (!container) return;
+    container.innerHTML = state.deals.map(deal => `
+        <div class="wiki-item">
+            <div class="category-tag">DEAL</div>
+            <h3>${deal.item}</h3>
+            <p><strong>Client:</strong> ${deal.client}<br>
+            <strong>Prix:</strong> ${deal.price} EB | <strong>Comm:</strong> ${deal.commission} EB</p>
+            <div class="item-meta">${deal.date}</div>
+        </div>
+    `).join('');
 }
 
 function placeBet() {
@@ -214,17 +268,41 @@ function placeBet() {
 
     // Simulated result
     setTimeout(() => {
-        const win = Math.random() > 0.6;
+        const win = Math.random() > 0.7;
         if (win) {
-            const winnings = amount * 2.5;
+            const odds = [1.5, 2.0, 3.0, 5.0];
+            const multiplier = odds[Math.floor(Math.random() * odds.length)];
+            const winnings = amount * multiplier;
             state.edBalance += winnings;
-            addTransaction('gain', 'DOGFIGHT_WIN', winnings);
+            addTransaction('gain', `DOGFIGHT_WIN (x${multiplier})`, winnings);
             status.innerHTML = `<span style="color:#00ff00">WIN! +${winnings} ED</span>`;
         } else {
             status.innerHTML = '<span style="color:red">LOST_BET</span>';
         }
         updateBalanceDisplay();
     }, 2000);
+}
+
+function renderWeapons() {
+    const list = document.getElementById('weapons-list');
+    if (!list) return;
+    list.innerHTML = state.weapons.map(w => `
+        <div class="skill-item">
+            <span>${w.name} (${w.dmg})</span>
+            <strong>ROF ${w.rof}</strong>
+        </div>
+    `).join('');
+}
+
+function renderCyberware() {
+    const list = document.getElementById('cyberware-list');
+    if (!list) return;
+    list.innerHTML = state.cyberware.map(c => `
+        <div class="skill-item">
+            <span>${c.name}</span>
+            <small>${c.effect}</small>
+        </div>
+    `).join('');
 }
 
 // --- CARNET ---
