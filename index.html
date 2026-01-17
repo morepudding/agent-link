@@ -83,6 +83,11 @@
                     <div class="card-label">CITY_MAP</div>
                     <small>NAVIGATION</small>
                 </button>
+                <button class="dash-card glitch-hover" onclick="switchView('inventory')">
+                    <div class="card-icon">📦</div>
+                    <div class="card-label">INVENTORY</div>
+                    <small>EQUIPMENT</small>
+                </button>
             </div>
         </section>
 
@@ -252,6 +257,23 @@
             <button class="back-btn" onclick="switchView('dashboard')">BACK_TO_HOME</button>
         </section>
 
+        <section id="view-inventory" class="view">
+            <h2 class="section-title">EQUIPMENT_MANIFEST</h2>
+
+            <div class="load-capacity glitch-border" style="margin-bottom: 20px; padding: 10px;">
+                <div class="bar-label">CARRY_LOAD: <span id="load-label">0 / 60 KG</span></div>
+                <div class="bar-outer">
+                    <div id="load-bar" class="bar-inner" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <div id="inventory-grid" class="inventory-grid">
+                <!-- Inventory items injected here -->
+            </div>
+
+            <button class="back-btn" onclick="switchView('dashboard')">BACK_TO_HOME</button>
+        </section>
+
         <section id="view-map" class="view">
             <h2 class="section-title">NIGHT_CITY_MAP_v1.0</h2>
             <div class="map-container glitch-border"
@@ -299,7 +321,7 @@
         <button onclick="switchView('network')">NET</button>
         <button onclick="switchView('dashboard')" class="active">HOME</button>
         <button onclick="switchView('wallet')">WALLET</button>
-        <button onclick="switchView('map')">MAP</button>
+        <button onclick="switchView('inventory')">INV</button>
         <button onclick="switchView('stats')">STATS</button>
     </footer>
 

@@ -50,7 +50,14 @@ let state = {
         { name: 'Neural Link', effect: 'Basis for most cyberware' },
         { name: 'Interface Plugs', effect: 'Direct connection to machines' }
     ],
-    deals: JSON.parse(localStorage.getItem('link_deals')) || []
+    deals: JSON.parse(localStorage.getItem('link_deals')) || [],
+    body: 6,
+    inventory: JSON.parse(localStorage.getItem('link_inventory')) || [
+        { id: 1, name: 'Heavy Pistol', weight: 1.5, icon: '🔫', type: 'weapon', desc: '3d6 DMG, ROF 2' },
+        { name: 'Heavy Armor Jack', weight: 5, icon: '🛡️', type: 'armor', desc: 'SP 11' },
+        { name: 'Med-Kit', weight: 0.5, icon: '💉', type: 'gear', desc: 'First aid supplies' },
+        { name: 'Encryption Key', weight: 0.1, icon: '🔑', type: 'misc', desc: 'Biotechnica data' }
+    ]
 };
 
 // --- INITIALIZATION ---
@@ -64,6 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderDeals();
     renderWeapons();
     renderCyberware();
+    renderInventory();
     updateStatDisplays();
     startVitalSim();
 });
@@ -84,7 +92,7 @@ function switchView(viewId) {
             (viewId === 'stats' && label === 'stats') ||
             (viewId === 'network' && label === 'net') ||
             (viewId === 'wallet' && label === 'wallet') ||
-            (viewId === 'carnet' && label === 'car')) {
+            (viewId === 'inventory' && label === 'inv')) {
             btn.classList.add('active');
         }
     });
@@ -303,6 +311,44 @@ function renderCyberware() {
             <small>${c.effect}</small>
         </div>
     `).join('');
+}
+
+function renderInventory() {
+    const grid = document.getElementById('inventory-grid');
+    if (!grid) return;
+
+    grid.innerHTML = state.inventory.map(item => `
+        <div class="inventory-item glitch-hover" onclick="showItemDetails(${item.id})">
+            <div class="item-icon">${item.icon}</div>
+            <div class="item-name-sm">${item.name}</div>
+            <div class="item-weight">${item.weight} kg</div>
+        </div>
+    `).join('');
+
+    updateLoadBar();
+}
+
+function updateLoadBar() {
+    const totalWeight = state.inventory.reduce((sum, item) => sum + item.weight, 0);
+    const maxCapacity = state.body * 10;
+    const percent = Math.min(100, (totalWeight / maxCapacity) * 100);
+
+    const bar = document.getElementById('load-bar');
+    const label = document.getElementById('load-label');
+
+    if (bar) {
+        bar.style.width = `${percent}%`;
+        bar.style.background = percent > 90 ? 'var(--cyber-red)' : 'var(--cyber-blue)';
+    }
+    if (label) {
+        label.innerText = `${totalWeight.toFixed(1)} / ${maxCapacity} KG`;
+    }
+}
+
+function showItemDetails(id) {
+    const item = state.inventory.find(i => i.id === id);
+    if (!item) return;
+    alert(`${item.name.toUpperCase()}\n----------------\nType: ${item.type}\nDesc: ${item.desc}\nWeight: ${item.weight}kg`);
 }
 
 // --- CARNET ---
