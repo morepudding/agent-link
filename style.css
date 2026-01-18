@@ -832,3 +832,218 @@ main {
         transform: translateY(100%);
     }
 }
+
+/* --- NIGHT CITY MAP --- */
+.map-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.map-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border: 1px solid var(--cyber-blue);
+}
+
+.map-position-indicator {
+    font-size: 0.8rem;
+}
+
+.map-position-indicator .label {
+    color: var(--cyber-blue);
+}
+
+.map-position-indicator .value {
+    color: var(--cyber-yellow);
+    font-family: 'Orbitron', sans-serif;
+    font-weight: bold;
+}
+
+.map-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.map-ctrl-btn {
+    background: rgba(0, 240, 255, 0.1);
+    border: 1px solid var(--cyber-blue);
+    color: var(--cyber-blue);
+    width: 35px;
+    height: 35px;
+    font-size: 1.2rem;
+    font-family: 'Orbitron', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.map-ctrl-btn:active {
+    background: var(--cyber-blue);
+    color: var(--bg-dark);
+}
+
+.map-canvas-container {
+    position: relative;
+    width: 100%;
+    height: 350px;
+    background: #0a1014;
+    border: 2px solid var(--cyber-blue);
+    overflow: hidden;
+    touch-action: none;
+}
+
+#night-city-canvas {
+    width: 100%;
+    height: 100%;
+    cursor: grab;
+}
+
+#night-city-canvas:active {
+    cursor: grabbing;
+}
+
+.map-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--cyber-blue);
+    font-family: 'Orbitron', sans-serif;
+    animation: pulse-loading 1.5s infinite;
+}
+
+@keyframes pulse-loading {
+
+    0%,
+    100% {
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+.map-legend {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    font-size: 0.65rem;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* District Popup */
+.district-popup {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 400px;
+    background: var(--panel-dark);
+    border: 2px solid var(--cyber-yellow);
+    box-shadow: 0 0 20px rgba(243, 230, 0, 0.3);
+    z-index: 100;
+    animation: slide-up 0.3s ease-out;
+}
+
+@keyframes slide-up {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background: rgba(243, 230, 0, 0.1);
+    border-bottom: 1px solid var(--cyber-yellow);
+}
+
+.popup-header h3 {
+    color: var(--cyber-yellow);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.popup-close {
+    background: none;
+    border: 1px solid var(--cyber-red);
+    color: var(--cyber-red);
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.popup-content {
+    padding: 15px;
+}
+
+.popup-status {
+    font-size: 0.75rem;
+    font-family: 'Orbitron', sans-serif;
+    color: var(--cyber-blue);
+    margin-bottom: 10px;
+}
+
+.popup-status.danger {
+    color: var(--cyber-red);
+}
+
+.popup-status.safe {
+    color: #00ff41;
+}
+
+.popup-status.warning {
+    color: var(--cyber-yellow);
+}
+
+.popup-content p {
+    font-size: 0.85rem;
+    color: #ccc;
+    line-height: 1.4;
+}
+
+/* Player position marker */
+@keyframes player-pulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00;
+        transform: scale(1);
+    }
+
+    50% {
+        box-shadow: 0 0 15px #00ff00, 0 0 25px #00ff00;
+        transform: scale(1.2);
+    }
+}

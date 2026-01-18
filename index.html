@@ -23,6 +23,7 @@
             });
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body class="cyber-theme">
@@ -221,16 +222,91 @@
                 <input type="text" id="wiki-search-input" placeholder="SEARCH_LORE..." oninput="searchWiki()">
             </div>
             <div class="wiki-categories">
-                <button onclick="filterWiki('slang')">SLANG</button>
-                <button onclick="filterWiki('rules')">RULES</button>
-                <button onclick="filterWiki('lore')">LORE</button>
-                <button onclick="filterWiki('biotechnica')">BIOTECHNICA</button>
+                <button onclick="filterWiki('gang')">👊 GANGS</button>
+                <button onclick="filterWiki('corpo')">🏢 CORPOS</button>
+                <button onclick="filterWiki('district')">🗺️ DISTRICTS</button>
+                <button onclick="filterWiki('tech')">⚙️ TECH</button>
+                <button onclick="filterWiki('contact')">🤝 CONTACTS</button>
+                <button onclick="filterWiki('slang')">🗣️ SLANG</button>
+                <button onclick="filterWiki('lore')">📜 LORE</button>
+                <button onclick="filterWiki('rules')">🎲 RULES</button>
             </div>
             <div id="wiki-content" class="feed-list">
                 <!-- Wiki items will appear here -->
             </div>
+            <button class="cyber-btn" onclick="showAddWikiModal()" style="margin-top: 15px; width: 100%;">➕
+                ADD_NEW_ENTRY</button>
             <button class="back-btn" onclick="switchView('dashboard')">BACK_TO_HOME</button>
         </section>
+
+        <!-- Wiki CRUD Modal -->
+        <div id="wiki-modal" class="modal-overlay"
+            style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center;">
+            <div class="modal-content glitch-border"
+                style="background: var(--bg-dark); padding: 20px; max-width: 400px; width: 90%;">
+                <h3 id="wiki-modal-title" style="color: var(--cyber-yellow); margin-bottom: 15px;">NEW_ENTRY</h3>
+                <input type="hidden" id="wiki-entry-id">
+                <div style="margin-bottom: 10px;">
+                    <label style="color: var(--cyber-blue); font-size: 0.8rem;">CATEGORY:</label>
+                    <select id="wiki-entry-cat"
+                        style="width: 100%; padding: 8px; background: rgba(0,240,255,0.1); border: 1px solid var(--cyber-blue); color: var(--cyber-blue); font-family: 'Rajdhani', sans-serif;">
+                        <option value="lore">📜 LORE</option>
+                        <option value="gang">👊 GANG</option>
+                        <option value="corpo">🏢 CORPO</option>
+                        <option value="district">🗺️ DISTRICT</option>
+                        <option value="tech">⚙️ TECH</option>
+                        <option value="contact">🤝 CONTACT</option>
+                        <option value="slang">🗣️ SLANG</option>
+                        <option value="rules">🎲 RULES</option>
+                    </select>
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label style="color: var(--cyber-blue); font-size: 0.8rem;">TITLE:</label>
+                    <input type="text" id="wiki-entry-title" placeholder="ENTRY_TITLE"
+                        style="width: 100%; padding: 8px; background: rgba(0,240,255,0.1); border: 1px solid var(--cyber-blue); color: var(--cyber-blue); font-family: 'Rajdhani', sans-serif;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="color: var(--cyber-blue); font-size: 0.8rem;">CONTENT:</label>
+                    <textarea id="wiki-entry-content" placeholder="ENTRY_CONTENT..." rows="4"
+                        style="width: 100%; padding: 8px; background: rgba(0,240,255,0.1); border: 1px solid var(--cyber-blue); color: var(--cyber-blue); font-family: 'Rajdhani', sans-serif; resize: vertical;"></textarea>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button class="cyber-btn" onclick="saveWikiEntry()" style="flex: 1;">💾 SAVE</button>
+                    <button class="cyber-btn" onclick="hideWikiModal()" style="flex: 1; background: var(--cyber-red);">✖
+                        CANCEL</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Modal (DB Keys) -->
+        <div id="settings-modal" class="modal-overlay"
+            style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center;">
+            <div class="modal-content glitch-border"
+                style="background: var(--bg-dark); padding: 20px; max-width: 400px; width: 90%;">
+                <h3 style="color: var(--cyber-yellow); margin-bottom: 15px; text-transform: uppercase;">
+                    System_Configuration</h3>
+
+                <div style="margin-bottom: 15px;">
+                    <label
+                        style="color: var(--cyber-blue); font-size: 0.8rem; display:block; margin-bottom:5px;">SUPABASE_URL:</label>
+                    <input type="text" id="setting-sb-url" placeholder="https://..."
+                        style="width: 100%; padding: 8px; background: rgba(0,240,255,0.1); border: 1px solid var(--cyber-blue); color: var(--cyber-blue); font-family: 'Rajdhani', sans-serif;">
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label
+                        style="color: var(--cyber-blue); font-size: 0.8rem; display:block; margin-bottom:5px;">SUPABASE_ANON_KEY:</label>
+                    <input type="password" id="setting-sb-key" placeholder="eyJhbG..."
+                        style="width: 100%; padding: 8px; background: rgba(0,240,255,0.1); border: 1px solid var(--cyber-blue); color: var(--cyber-blue); font-family: 'Rajdhani', sans-serif;">
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button class="cyber-btn" onclick="saveSettings()" style="flex: 1;">💾 CONNECT & RELOAD</button>
+                    <button class="cyber-btn" onclick="document.getElementById('settings-modal').style.display='none'"
+                        style="flex: 1; background: var(--cyber-red);">✖ CANCEL</button>
+                </div>
+            </div>
+        </div>
 
         <section id="view-data-pool" class="view">
             <h2 class="section-title">NIGHT_CITY_DATA_POOL</h2>
@@ -302,31 +378,60 @@
         </section>
 
         <section id="view-map" class="view">
-            <h2 class="section-title">NIGHT_CITY_MAP_v1.0</h2>
-            <div class="map-container glitch-border"
-                style="background: rgba(0,0,0,0.5); padding: 15px; min-height: 200px;">
-                <p style="color: var(--cyber-blue); font-family: 'Rajdhani', sans-serif;">[LOCALIZING_USER_AGENT...]</p>
-                <p><strong>POSITION:</strong> HEYWOOD - THE GLEN</p>
-                <hr style="border: 0.5px solid var(--cyber-blue); margin: 10px 0;">
-                <p>Consultez le document de référence pour les détails des secteurs :</p>
-                <a href="NIGHT_CITY_MAP.md" target="_blank" class="cyber-btn"
-                    style="display:inline-block; text-decoration:none; text-align:center;">OPEN_DETAILED_MAP_DOC</a>
+            <h2 class="section-title glitch-text" data-text="NIGHT_CITY_ATLAS_v2.0">NIGHT_CITY_ATLAS_v2.0</h2>
 
-                <div class="map-sectors" style="margin-top: 15px;">
-                    <div class="wiki-item">
-                        <h3>Heywood</h3>
-                        <p>Status: SAFE_ZONE (mostly)</p>
+            <div class="map-wrapper">
+                <div class="map-header">
+                    <div class="map-position-indicator">
+                        <span class="label">POSITION:</span>
+                        <span class="value" id="current-district">HEYWOOD - THE GLEN</span>
                     </div>
-                    <div class="wiki-item">
-                        <h3>Watson</h3>
-                        <p>Status: GANG_ACTIVITY_HIGH</p>
-                    </div>
-                    <div class="wiki-item">
-                        <h3>Pacifica</h3>
-                        <p>Status: EXTREME_DANGER</p>
+                    <div class="map-controls">
+                        <button class="map-ctrl-btn" onclick="mapZoomIn()">+</button>
+                        <button class="map-ctrl-btn" onclick="mapZoomOut()">−</button>
+                        <button class="map-ctrl-btn" onclick="mapReset()">⌂</button>
+                        <button class="map-ctrl-btn" onclick="nightCityMap.toggleDebug()"
+                            style="color: var(--cyber-red);">⚙</button>
+                        <button class="map-ctrl-btn" onclick="openSettings()"
+                            style="color: var(--cyber-blue);">💾</button>
                     </div>
                 </div>
+
+                <div class="map-canvas-container" id="map-canvas-container">
+                    <canvas id="night-city-canvas"></canvas>
+                    <div class="map-loading" id="map-loading">
+                        <span class="loading-text">[RENDERING_MAP_DATA...]</span>
+                    </div>
+                </div>
+
+                <div class="map-legend">
+                    <div class="legend-item"><span class="legend-color" style="background: #f3e600;"></span> ROUTES
+                    </div>
+                    <div class="legend-item"><span class="legend-color" style="background: #ff003c;"></span>
+                        COMBAT_ZONES</div>
+                    <div class="legend-item"><span class="legend-color" style="background: #00f0ff;"></span> LANDMARKS
+                    </div>
+                    <div class="legend-item"><span class="legend-color" style="background: #00ff00;"></span>
+                        YOUR_POSITION</div>
+                </div>
             </div>
+
+            <!-- District Info Popup -->
+            <div id="district-popup" class="district-popup" style="display: none;">
+                <div class="popup-header">
+                    <h3 id="popup-district-name">DISTRICT_NAME</h3>
+                    <button class="popup-close" onclick="closeDistrictPopup()">✕</button>
+                </div>
+                <div class="popup-content">
+                    <div class="popup-status" id="popup-status">STATUS: UNKNOWN</div>
+                    <p id="popup-description">Description loading...</p>
+                    <button class="cyber-btn" id="popup-wiki-btn" onclick="openDistrictInWiki()"
+                        style="margin-top: 10px;">
+                        📡 VIEW_IN_DATATERM
+                    </button>
+                </div>
+            </div>
+
             <button class="back-btn" onclick="switchView('dashboard')">BACK_TO_HOME</button>
         </section>
 

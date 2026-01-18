@@ -1,0 +1,14 @@
+{
+  "name": "agent-link",
+  "version": "1.0.0",
+  "description": "Cyberpunk Agent Link App",
+  "main": "app.js",
+  "scripts": {
+    "init-db": "node init_db.js",
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "pg": "^8.17.1"
+  }
+}
